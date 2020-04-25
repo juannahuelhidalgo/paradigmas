@@ -43,6 +43,14 @@ void putFila(char u, int n, Fila fila) {
 		}
 };
 
+void putMat(char u,int n,int m, Matriz matriz) {
+	switch (n) {
+	case 1:  putFila(u, m, matriz.fila1);
+	case 2:  putFila(u, m, matriz.fila2);
+	case 3:	 putFila(u, m, matriz.fila3);
+	}
+};
+
 /* varias funciones matriz */
 
 enum TTT { V, X, Y };
