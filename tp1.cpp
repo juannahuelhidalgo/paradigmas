@@ -4,10 +4,18 @@
 #include <string>
 #include <algorithm>
 
-using namespace std;
+enum TTT {V, X, Y};
 
-typedef struct Fila {
-	char a, a, a;
+/* dice que no puede deducir el tipo del item con auto,
+ * por ahora no se como solucionarlo */
+struct Fila {
+	TTT item1;
+	TTT item2;
+	TTT item3;
+
+	void show() {
+		std::cout << item1 << " " << item2 << " " << item3;
+	}
 };
 
 struct Matriz {
@@ -16,64 +24,53 @@ struct Matriz {
 	Fila fila3;
 };
 
-void showMat(Matriz matriz) {
-	int n = 1;
-	if (n < 3) {
-		fila(n,matriz);
-		n++;
-	}	
-};
-
-Matriz mtest = Matriz{ Fila{1,2,3},Fila{4,5,6},Fila{7,8,9} };
-
-
 Fila fila(int n, Matriz matriz) {
-	switch (n) {
-	case 1: return matriz.fila1;
-	case 2: return matriz.fila2;
-	case 3: return matriz.fila3;
+	switch(n) {
+		case 1: return matriz.fila1;
+		case 2: return matriz.fila2;
+		case 3: return matriz.fila3;
 	}
 }
 
-void putFila(char u, int n, Fila fila) {
-		switch (n) {
-		case 1:  u = fila.a1;
-		case 2:  u = fila.a2;
-		case 3:  u = fila.a3;
-		}
-};
-
-void putVal(char u,int n,int m, Matriz matriz) {
-	switch (n) {
-	case 1:  putFila(u, m, matriz.fila1);
-	case 2:  putFila(u, m, matriz.fila2);
-	case 3:	 putFila(u, m, matriz.fila3);
-	}
-};
-
-char getvalFila(int n, Fila fila){
-	switch (n) {
-	case 1:  return fila.a1;
-	case 2:  return fila.a2;
-	case 3:  return fila.a3;
+Fila putrow(TTT value, int itemindex, Fila fila) {
+	switch (itemindex) {
+		case 1: return Fila {value, fila.item2, fila.item3};
+		case 2: return Fila {fila.item1, value, fila.item3};
+		case 3: return Fila {fila.item1, fila.item2, value};
+		default : return fila;
 	}
 }
 
-
-char getVal(int n, int m, Matriz matriz) {
-	switch (n) {
-	case 1:  getvalFila (m, matriz.fila1);
-	case 2:  getvalFila (m, matriz.fila2);
-	case 3:  getvalFila (m, matriz.fila3);
+Matriz putval(TTT value, int rowindex, int itemindex, Matriz matriz) {
+	switch (rowindex) {
+		case 1: return Matriz {putrow(value, itemindex, matriz.fila1), matriz.fila2, matriz.fila3};
+		case 2: return Matriz {matriz.fila1, putrow(value, itemindex, matriz.fila2), matriz.fila3};
+		case 3: return Matriz {matriz.fila1, matriz.fila2, putrow(value, itemindex, matriz.fila3)};
+		default: return matriz;
 	}
 }
+
+auto getvalrow(int itemindex, Fila fila){
+	switch (itemindex) {
+		case 1: return fila.item1;
+		case 2: return fila.item2;
+		case 3: return fila.item3;
+	}
+}
+
+auto getval(int itemindex, int rowindex, Matriz matriz) {
+	switch (rowindex) {
+		case 1:  getvalrow (itemindex, matriz.fila1);
+		case 2:  getvalrow (itemindex, matriz.fila2);
+		case 3:  getvalrow (itemindex, matriz.fila3);
+	}
+}
+
 /* varias funciones matriz */
-
-enum TTT { V, X, Y };
 
 /* type Posic = (Int,Int) */
 
-Matriz tablero = Matriz{ Fila{V,V,V},Fila{V,V,V},Fila{V,V,V} };
+Matriz tablero = Matriz {Fila{V,V,V},Fila{V,V,V},Fila{V,V,V}};
 
 
 int main() {
@@ -82,24 +79,24 @@ int main() {
 	int f;
 	int c;
 
-	Fila filaA = { (int)1, (int)2, (int)3 };
+	// Fila filaA = { (int)1, (int)2, (int)3 };
 
-	[]() {
+	[] () {
 		std::cout << "Ta-Te-Ti Funcional" << std::endl;
 		std::cout << " " << std::endl;
 		std::cout << "X maquina Y persona" << std::endl;
 		std::cout << " " << std::endl;
 		std::cout << "empieza (S/N)?" << std::endl;
-	};
+	} 
+	();
 
-		std::cin >> m;
-		if (m == "S") {
-			std::cout << "Juege" << std::endl;
-		}
-		else {
-			std::cout << "Empiezo" << std::endl;
-		}
-
+	std::cin >> m;
+	if (m == "S") {
+		std::cout << "Juege" << std::endl;
+	}
+	else {
+		std::cout << "Empiezo" << std::endl;
+	}
 
 	std::cin >> f;
 	std::cin >> c;
