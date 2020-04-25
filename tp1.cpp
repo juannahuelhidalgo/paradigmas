@@ -51,6 +51,22 @@ void putVal(char u,int n,int m, Matriz matriz) {
 	}
 };
 
+char getvalFila(int n, Fila fila){
+	switch (n) {
+	case 1:  return fila.a1;
+	case 2:  return fila.a2;
+	case 3:  return fila.a3;
+	}
+}
+
+
+char getVal(int n, int m, Matriz matriz) {
+	switch (n) {
+	case 1:  getvalFila (m, matriz.fila1);
+	case 2:  getvalFila (m, matriz.fila2);
+	case 3:  getvalFila (m, matriz.fila3);
+	}
+}
 /* varias funciones matriz */
 
 enum TTT { V, X, Y };
