@@ -35,6 +35,14 @@ Fila fila(int n, Matriz matriz) {
 	}
 }
 
+ void putFila(int n, Matriz matriz, char u) {
+	 switch (n) {
+	 case 1:  u = matriz.fila1.a1;
+	 case 2:  u = matriz.fila1.a2;
+	 case 3:  u = matriz.fila1.a3;
+	 }
+}
+
 /* varias funciones matriz */
 
 enum TTT { V, X, Y };
