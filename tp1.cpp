@@ -43,7 +43,7 @@ void putFila(char u, int n, Fila fila) {
 		}
 };
 
-void putMat(char u,int n,int m, Matriz matriz) {
+void putVal(char u,int n,int m, Matriz matriz) {
 	switch (n) {
 	case 1:  putFila(u, m, matriz.fila1);
 	case 2:  putFila(u, m, matriz.fila2);
