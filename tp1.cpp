@@ -7,7 +7,7 @@
 using namespace std;
 
 typedef struct Fila {
-	char a,b,c;
+	char a, a, a;
 };
 
 struct Matriz {
