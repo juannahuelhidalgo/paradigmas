@@ -16,6 +16,14 @@ struct Matriz {
 	Fila fila3;
 };
 
+void showMat(Matriz matriz) {
+	int n = 1;
+	if (n < 3) {
+		fila(n,matriz);
+		n++;
+	}	
+};
+
 Matriz mtest = Matriz{ Fila{1,2,3},Fila{4,5,6},Fila{7,8,9} };
 
 
