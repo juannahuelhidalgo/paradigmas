@@ -74,10 +74,23 @@ auto getval(int itemindex, int rowindex, Matriz matriz) {
 
 
 /* type Posic = (Int,Int) */
-std::tuple<int, int> posic;
+std::vector<std::pair<int, int>> posic;
 
 
 Matriz tablero = Matriz{ Fila{V,V,V},Fila{V,V,V},Fila{V,V,V} };
+
+void allpos() {
+	std::vector<std::pair<int, int>> allposs;
+	for (int i = 1; i < 10; i++) {
+		auto p = std::make_pair(i, i);
+		allposs.push_back(p);
+	};
+
+	for (std::vector < std::pair<int, int>>::const_iterator it = allposs.begin(); it != allposs.end(); it++) {
+		std::cout << it->first;
+		std::cout << it->second;
+	}
+};
 
 
 int main() {
