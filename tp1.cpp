@@ -14,7 +14,7 @@ struct Fila {
 	TTT item3;
 
 	void show() {
-		std::cout << item1 << " " << item2 << " " << item3;
+		std::cout << item1 << " " << item2 << " " << item3 << std::endl;
 	}
 };
 
@@ -22,6 +22,12 @@ struct Matriz {
 	Fila fila1;
 	Fila fila2;
 	Fila fila3;
+
+	void show() {
+		fila1.show();
+		fila2.show();
+		fila3.show();
+	}
 };
 
 Fila fila(int n, Matriz matriz) {
@@ -66,9 +72,14 @@ auto getval(int itemindex, int rowindex, Matriz matriz) {
 	}
 }
 
-/* varias funciones matriz */
-
 /* type Posic = (Int,Int) */
+std::tuple<int, int> posic;
+
+/*template <typename T1, typename T2>
+void getposVal(tuple <int, int> posic, Matriz tablero) {
+    getVal(posic,tablero);
+};
+*/
 
 Matriz tablero = Matriz {Fila{V,V,V},Fila{V,V,V},Fila{V,V,V}};
 
@@ -79,7 +90,8 @@ int main() {
 	int f;
 	int c;
 
-	// Fila filaA = { (int)1, (int)2, (int)3 };
+    std::cout << "tablero generado:" << std::endl;
+	tablero.show();
 
 	[] () {
 		std::cout << "Ta-Te-Ti Funcional" << std::endl;
