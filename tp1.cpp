@@ -76,7 +76,7 @@ Matriz tablero = Matriz{ Fila{V,V,V},Fila{V,V,V},Fila{V,V,V} };
 
 //USO DE BEGIN?
 std::vector<Posic> allpos() {
-	std::vector<Posic> allposs;
+	 std::vector<Posic> allposs;
 /*	for (std::vector<Posic>::iterator it = allposs.begin(); it != allposs.end(); ++it) {
 		auto p = std::make_pair(i, i);
 		allposs.push_back(p);
@@ -98,7 +98,6 @@ TTT getFilaVals(int rowindex, Matriz tablero) {
 	getval(rowindex, 2, tablero);
 	getval(rowindex, 3, tablero);
 };
-
 TTT getColVals(int colindex, Matriz tablero) {
 	getval(1, colindex, tablero);
 	getval(2, colindex, tablero);
@@ -117,14 +116,13 @@ TTT getDiagSec(Matriz tablero) {
 	getval(3, 1, tablero);
 };
 
-//VER porque no deja usar el poss asi, puntero? 
 TTT mydiags(Posic poss, Matriz tablero) {
-	if (poss.first == 2 && poss.second = 2) { getDiagPpal(tablero) + getDiagSec(tablero); };
-	if (poss.first == 1 && poss.second == 1) { getDiagPpal(tablero); };
-	if (poss.first == 3 && poss.second == 3) { getDiagPpal(tablero); };
-	if (poss.first == 1 && poss.second == 3) { getDiagPpal(tablero); };
-	if (poss.first == 3 && poss.second == 1) { getDiagPpal(tablero); };
-	if (poss.first == NULL && poss.second == NULL) { getDiagPpal(tablero); };
+	if ((poss.first == 2) && (poss.second = 2)) { getDiagPpal(tablero) + getDiagSec(tablero); };
+	if ((poss.first == 1) && (poss.second == 1)) { getDiagPpal(tablero); };
+	if ((poss.first == 3) && (poss.second == 3)) { getDiagPpal(tablero); };
+	if ((poss.first == 1) && (poss.second == 3)) { getDiagPpal(tablero); };
+	if ((poss.first == 3) && (poss.second == 1)) { getDiagPpal(tablero); };
+	if ((poss.first == NULL) && (poss.second == NULL)) { getDiagPpal(tablero); };
 	
 };
 
@@ -141,42 +139,90 @@ std::vector<int> valorize(TTT yo, TTT p) {
 };
 
 
-//ver ++
+//SUMAR ENUMS
 template<typename ...Args> auto sum(Args ...args)
 {
 	return (args + ... + 0);
 }
 int valpos(TTT yo, Posic poss, Matriz tablero) {
-	TTT myvalues = ((getColVals(poss.second, tablero)) ++ (getFilaVals(poss.first, tablero)) ++ (mydiags(poss, tablero)));
+	int i = 0;
+	TTT myvalues = ((getColVals(poss.second, tablero)) + (getFilaVals(poss.first, tablero)) + (mydiags(poss, tablero)));
 		sum(valorize(yo, myvalues));
-
+		
 };
 
-//FALTA QUE VARIABLE DEL POSIC VA EN X AKA VALPOS
+
 std::vector<Posic, int> allposValues(TTT yo, Matriz tablero){
-	std::vector<Posic,int> v;
-	std::transform(v.begin(), v.end(), v.begin(),
-		[yo, p](std::vector<int> v) {return  (v.push_back = (valpos(yo, ,tablero),allpos())); });
+	std::vector<Posic,int> allposvalues;
+	std::transform(allposvalues.begin(), allposvalues.end(), allposvalues.begin(),
+		[yo,tablero](std::vector<Posic,int> allposvalues) {return  (allposvalues.push_back = (valpos(yo, (allpos().pop_back) ,tablero)));});
 
 };
+
+
+
+
+
+//SUMAR ENUMS
+TTT alltrios(Matriz tablero) {
+	std::vector<TTT> columnas;
+	std::vector<TTT> filas;
+	std::vector<TTT> suma;
+
+	std::vector<int> n = { 1, 2, 3 };
+	std::transform(columnas.begin(), columnas.end(), columnas.begin(),
+		[n, tablero](std::vector<TTT> columnas) {return  (columnas.push_back = (getColVals(n.back , tablero))); });
+	std::transform(filas.begin(), filas.end(), filas.begin(),
+		[n, tablero](std::vector<TTT> filas) {return  (filas.push_back = (getColVals(n.back, tablero))); });
+	
+	for (int i = 0; i < 9; i++) {
+		suma[i] = columnas[i] + filas[i];
+	}
+
+	tablero = ((getDiagPpal (tablero)) + (getDiagSec (tablero)) + (suma));
+//: ((map (\x -> getColVals x m) [1..3]) ++ (map (\x -> getFilaVals x m) [1..3]))
+
+};
+
+
+
+
+//muerte cerebral
+//availmoves::TTT->Matriz TTT ->[(Posic, Int)]
+//availmoves yo t = filter(\x->getposval(fst x) t == V) $ allposValues yo t
+std::vector<Posic, int> availmoves(TTT yo, Matriz tablero) {
+	std::vector<int> availmoves;
+	allposValues(yo, std::copy_if(availmoves.begin(), availmoves.end(), 
+		std::back_inserter(), [](int i) {return getposval(,yo); }););
+	
+	
+
+}
+
+
+
+
 
 
 Matriz play(TTT yo, Posic poss, Matriz tablero){
 	return putval(yo, poss.first, poss.second,tablero);
 };
 
-Posic bestmove(TTT yo, Matriz tablero){
 
-//implementar
+
+
+Posic bestmove(TTT yo, Matriz tablero){
+	
+	//implementar
 
 };
+
+
+
 
 Matriz playbest(TTT yo, Matriz tablero) {
 	return play(yo, bestmove(yo, tablero), tablero);
-
 };
-
-
 
 int main() {
 	std::string m;
@@ -201,3 +247,4 @@ int main() {
 	system("PAUSE");
 	return 0;
 }
+
