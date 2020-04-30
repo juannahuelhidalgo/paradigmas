@@ -295,24 +295,23 @@ std::vector<Posic, int> allposValues(TTT yo, Matriz tablero){
 
 };
 
-//SUMAR ENUMS
-TTT alltrios(Matriz tablero) {
-	std::vector<TTT> columnas;
-	std::vector<TTT> filas;
-	std::vector<TTT> suma;
+std::vector<TTT> alltrios(Matriz tablero) {
+	//std::vector<TTT> columnas;
+	//std::vector<TTT> filas;
+	std::vector<TTT> map;
 
+	//creado de los mapas
 	std::vector<int> n = { 1, 2, 3 };
-	std::transform(columnas.begin(), columnas.end(), columnas.begin(),
-		[n, tablero](std::vector<TTT> columnas) {return  (columnas.push_back = (getColVals(n.back , tablero))); });
+	/*std::transform(columnas.begin(), columnas.end(), columnas.begin(),
+		[n, tablero](std::vector<TTT> columnas) {return  (columnas.push_back = (getColVals(n.back, tablero))); });
 	std::transform(filas.begin(), filas.end(), filas.begin(),
 		[n, tablero](std::vector<TTT> filas) {return  (filas.push_back = (getColVals(n.back, tablero))); });
-	
-	for (int i = 0; i < 9; i++) {
-		suma[i] = columnas[i] + filas[i];
-	}
+		*/
+	std::transform(map.begin(), map.end(), map.begin(),
+		[n, tablero](std::vector<TTT> map) {return  (map.push_back = (getColVals(n.back, tablero)) + (getColVals(n.back, tablero)))};
 
-	tablero = ((getDiagPpal (tablero)) + (getDiagSec (tablero)) + (suma));
-//: ((map (\x -> getColVals x m) [1..3]) ++ (map (\x -> getFilaVals x m) [1..3]))
+	return map;
+
 };
 
 //muerte cerebral
