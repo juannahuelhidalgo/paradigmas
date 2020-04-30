@@ -317,13 +317,12 @@ std::vector<TTT> alltrios(Matriz tablero) {
 
 };
 
-//muerte cerebral
-//availmoves::TTT->Matriz TTT ->[(Posic, Int)]
-//availmoves yo t = filter(\x->getposval(fst x) t == V) $ allposValues yo t
-std::vector<Posic, int> availmoves(TTT yo, Matriz tablero) {
-	std::vector<int> availmoves;
-	allposValues(yo, std::copy_if(availmoves.begin(), availmoves.end(), 
-		std::back_inserter(), [](int i) {return getposval(,yo); }););
+
+//muerte cerebral?
+std::vector<Posic, int> availmoves(TTT mivalor, Matriz tablero) {
+	std::vector<Posic,int> availmoves;
+
+	return availmoves = allposValues(getposval((allpos().pop_back), tablero), tablero); 
 }
 
 Matriz play(TTT yo, Posic poss, Matriz tablero){
