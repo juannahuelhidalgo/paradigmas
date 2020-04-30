@@ -321,7 +321,6 @@ std::vector<TTT> alltrios(Matriz tablero) {
 //muerte cerebral?
 std::vector<Posic, int> availmoves(TTT mivalor, Matriz tablero) {
 	std::vector<Posic,int> availmoves;
-
 	return availmoves = allposValues(getposval((allpos().pop_back), tablero), tablero); 
 }
 
