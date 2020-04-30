@@ -266,9 +266,12 @@ int playvalue(TTT mivalor, TTT valor) {
  */
 std::vector<int> valorize(TTT mivalor, std::vector<TTT> valores) {
 	std::vector<int> valnums;
-    auto valnums_bind = std::bind(&playvalue, mivalor, std::placeholders::_1);
-	std::transform(valores.begin(), valores.end(), std::back_inserter(valnums), valnums_bind);
-    return valnums;
+	std::transform(valnums.begin(), valnums.end(), valnums.begin(),
+		[mivalor, valores](std::vector<TTT> valnums) {return  (valnums.push_back = (playvalue(mivalor,valores.back))); });
+
+	/*auto valnums_bind = std::bind(&playvalue, mivalor, std::placeholders::_1);
+	std::transform(valores.begin(), valores.end(), std::back_inserter(valnums), valnums_bind);*/
+	return valnums;
 }
 
 /**
