@@ -291,11 +291,11 @@ int valpos(TTT mivalor, Posic posicion, Matriz matriz) {
 
 // TO BE CONTINUED...
 
-std::vector<Posic, int> allposValues(TTT yo, Matriz tablero){
-	std::vector<Posic,int> allposvalues;
+typedef std::vector<Posic, int> posvalue;
+std::vector<posvalue> allposValues(TTT  mivalor, Matriz tablero) {
+	std::vector<posvalue> allposvalues;
 	std::transform(allposvalues.begin(), allposvalues.end(), allposvalues.begin(),
-		[yo,tablero](std::vector<Posic,int> allposvalues) {return  (allposvalues.push_back = (valpos(yo, (allpos().pop_back) ,tablero)));});
-
+		[mivalor, tablero](std::vector<posvalue> allposvalues) {return  (allposvalues.push_back = (valpos(mivalor, (allpos().pop_back), tablero))); });
 };
 
 std::vector<TTT> alltrios(Matriz tablero) {
@@ -318,11 +318,24 @@ std::vector<TTT> alltrios(Matriz tablero) {
 };
 
 
-//muerte cerebral?
-std::vector<Posic, int> availmoves(TTT mivalor, Matriz tablero) {
-	std::vector<Posic,int> availmoves;
-	return availmoves = allposValues(getposval((allpos().pop_back), tablero), tablero); 
+//muerte cerebral
+//availmoves::TTT->Matriz TTT ->[(Posic, Int)]
+//availmoves yo t = filter(\x->getposval(fst x)  t== V) $ allposValues yo t
+//el filtro es mas importante $ esta a su derecha entonces se le aplica el filtro a tablero;
+std::vector<posvalue> availmoves(TTT mivalor, Matriz tablero) {
+	std::vector<posvalue> posvalues= allposValues(mivalor,tablero);
+	TTT a = if(getposval((allposValues(mivalor, tablero)).push_back, tablero) );
+	return availmoves = getposval((allposValues(mivalor, tablero).push_back), tablero);
 }
+
+
+/*template<typename T, typename Predicate>
+std::vector<posvalue> availmoves(Predicate pred, TTT mivalor, Matriz tablero)
+{
+	auto results = std::vector<posvalue>{getposval((allposValues(mivalor, tablero)).push_back, tablero)};
+	std::copy_if(begin(input), end(input), back_inserter(results), pred);
+	return results;
+}*/
 
 Matriz play(TTT yo, Posic poss, Matriz tablero){
 	return putval(yo, poss.first, poss.second,tablero);
