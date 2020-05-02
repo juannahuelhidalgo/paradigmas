@@ -336,16 +336,15 @@ std::vector<vecTTT> alltrios(Matriz tablero) {
  * @param matriz la matriz.
  * @return un vector que representa la posicion y su valor.
  */
-std::vector<posvalue> availmoves(TTT mivalor, Matriz tablero,Posic pos) {
-    std::vector<posvalue>posiciones = allposValues(mivalor, tablero);
-    std::vector<TTT> vacio = { V };
-    std::vector<posvalue>availmoves;
-    std::copy_if(posiciones.begin(), posiciones.end(), std::back_inserter(availmoves),
-        [&vacio](const Fila& item)
-        {   /* return std::find(vacio.begin(), vacio.end(), item) == vacio.end();*/});
-
+std::vector<Posic,int> availmoves(TTT mivalor, Matriz tablero) {
+    std::vector<Posic, int>posiciones = allposValues(mivalor, tablero);
+    std::vector<Posic,int>availmoves;
+    for (int i = 0; i < posiciones.size(); i++) {
+        if (getposval(posiciones[i], tablero) == V) {
+            availmoves.push_back(posiciones[i]);
+        };
     return availmoves;
- 
+    }
 }
 
 
