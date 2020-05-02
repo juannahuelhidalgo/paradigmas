@@ -307,6 +307,11 @@ std::vector<posvalue> allposValues(TTT  mivalor, Matriz tablero) {
     return allposvalues;
 };
 
+/**
+ * Funcion que devuelve todos las posibilidades de ganar del jugador
+ * @param matriz la matriz.
+ * @return un vector que representa todas las formas.
+ */
 typedef std::vector<TTT> vecTTT;
 std::vector<vecTTT> alltrios(Matriz tablero) {
     std::vector <TTT> col;
@@ -318,15 +323,12 @@ std::vector<vecTTT> alltrios(Matriz tablero) {
     auto fil_bind = std::bind(&getRowVals, tablero, std::placeholders::_1);
     std::transform(begin(n), end(n), back_inserter(fil), fil_bind);
 
- //SUMADO DE MAPAS?
-    
-    
-    std::vector<vecTTT> trios = { (getDiagPpal(tablero)) ,  (getDiagSec(tablero) /*, colfil*/)};
+    std::merge(col.begin(), col.end(),fil.end(), fil.end(), std::back_inserter(colfil));
+ 
+    std::vector<vecTTT> trios = { (getDiagPpal(tablero)) ,  (getDiagSec(tablero), colfil)};
   
     return trios;
-
 };
-
 
 /**
  * Funcion que devuelve todas las posiciones vacias
