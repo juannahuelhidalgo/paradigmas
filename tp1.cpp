@@ -328,15 +328,24 @@ std::vector<vecTTT> alltrios(Matriz tablero) {
 };
 
 
-//muerte cerebral
-//availmoves::TTT->Matriz TTT ->[(Posic, Int)]
-//availmoves yo t = filter(\x->getposval(fst x)  t== V) $ allposValues yo t
-//el filtro es mas importante $ esta a su derecha entonces se le aplica el filtro a tablero;
-std::vector<posvalue> availmoves(TTT mivalor, Matriz tablero) {
-	std::vector<posvalue> posvalues= allposValues(mivalor,tablero);
-	TTT a = if(getposval((allposValues(mivalor, tablero)).push_back, tablero) );
-	return availmoves = getposval((allposValues(mivalor, tablero).push_back), tablero);
+/**
+ * Funcion que devuelve todas las posiciones vacias
+ * @param mivalor el valor del jugador
+ * @param matriz la matriz.
+ * @return un vector que representa la posicion y su valor.
+ */
+std::vector<posvalue> availmoves(TTT mivalor, Matriz tablero,Posic pos) {
+    std::vector<posvalue>posiciones = allposValues(mivalor, tablero);
+    std::vector<TTT> vacio = { V };
+    std::vector<posvalue>availmoves;
+    std::copy_if(posiciones.begin(), posiciones.end(), std::back_inserter(availmoves),
+        [&vacio](const Fila& item)
+        {   /* return std::find(vacio.begin(), vacio.end(), item) == vacio.end();*/});
+
+    return availmoves;
+ 
 }
+
 
 
 /*template<typename T, typename Predicate>
