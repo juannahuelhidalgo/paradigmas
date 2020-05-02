@@ -369,6 +369,18 @@ Matriz playbest(TTT yo, Matriz tablero) {
 	return play(yo, bestmove(yo, tablero), tablero);
 };
 
+//gano::TTT->Matriz TTT->Bool
+//gano a m = any(\x->all(a == ) x) $ allTrios m
+bool gano(TTT valor,Matriz tablero){
+    std::vector<vecTTT>formas = alltrios(tablero);
+    if (std::any_of(formas.begin(), formas.end(), [formas]()
+        { }));
+    if (std::all_of(formas.begin(), formas.end(), [formas](vecTTT i) 
+        {if((i.pop_back()) = X){
+        return true;
+    }; }))
+}//falta implementar
+
 int main() {
 	std::string m;
 
