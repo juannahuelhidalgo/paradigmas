@@ -291,29 +291,39 @@ int valpos(TTT mivalor, Posic posicion, Matriz matriz) {
 
 // TO BE CONTINUED...
 
+/**
+ * Funcion que devuelve todos los valores de las posiciones de un jugador
+ * @param mivalor el valor del jugador.
+ * @param matriz la matriz.
+ * @return un vector que representa lugar a lugar el valor de una posicion en una matriz para un jugador.
+ */
+
 typedef std::vector<Posic, int> posvalue;
 std::vector<posvalue> allposValues(TTT  mivalor, Matriz tablero) {
-	std::vector<posvalue> allposvalues;
-	std::transform(allposvalues.begin(), allposvalues.end(), allposvalues.begin(),
-		[mivalor, tablero](std::vector<posvalue> allposvalues) {return  (allposvalues.push_back = (valpos(mivalor, (allpos().pop_back), tablero))); });
+    std::vector<posvalue> allposvalues;
+    std::vector<Posic>allposs = allpos();
+    auto allpos_bind = std::bind(&valpos, mivalor, tablero, std::placeholders::_1);
+    std::transform(begin(allposs), end(allposs), back_inserter(allposvalues), allpos_bind);
+    return allposvalues;
 };
 
-std::vector<TTT> alltrios(Matriz tablero) {
-	//std::vector<TTT> columnas;
-	//std::vector<TTT> filas;
-	std::vector<TTT> map;
+typedef std::vector<TTT> vecTTT;
+std::vector<vecTTT> alltrios(Matriz tablero) {
+    std::vector <TTT> col;
+    std::vector <TTT> fil;
+    std::vector <TTT> colfil;
+    std::vector<int> n = { 1, 2, 3 };
+    auto col_bind = std::bind(&getColVals, tablero, std::placeholders::_1);
+    std::transform(begin(n), end(n), back_inserter(col), col_bind);
+    auto fil_bind = std::bind(&getRowVals, tablero, std::placeholders::_1);
+    std::transform(begin(n), end(n), back_inserter(fil), fil_bind);
 
-	//creado de los mapas
-	std::vector<int> n = { 1, 2, 3 };
-	/*std::transform(columnas.begin(), columnas.end(), columnas.begin(),
-		[n, tablero](std::vector<TTT> columnas) {return  (columnas.push_back = (getColVals(n.back, tablero))); });
-	std::transform(filas.begin(), filas.end(), filas.begin(),
-		[n, tablero](std::vector<TTT> filas) {return  (filas.push_back = (getColVals(n.back, tablero))); });
-		*/
-	std::transform(map.begin(), map.end(), map.begin(),
-		[n, tablero](std::vector<TTT> map) {return  (map.push_back = (getColVals(n.back, tablero)) + (getColVals(n.back, tablero)))};
-
-	return map;
+ //SUMADO DE MAPAS?
+    
+    
+    std::vector<vecTTT> trios = { (getDiagPpal(tablero)) ,  (getDiagSec(tablero) /*, colfil*/)};
+  
+    return trios;
 
 };
 
