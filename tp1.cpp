@@ -347,39 +347,67 @@ std::vector<Posic,int> availmoves(TTT mivalor, Matriz tablero) {
     }
 }
 
-
-
-/*template<typename T, typename Predicate>
-std::vector<posvalue> availmoves(Predicate pred, TTT mivalor, Matriz tablero)
-{
-	auto results = std::vector<posvalue>{getposval((allposValues(mivalor, tablero)).push_back, tablero)};
-	std::copy_if(begin(input), end(input), back_inserter(results), pred);
-	return results;
-}*/
-
-Matriz play(TTT yo, Posic poss, Matriz tablero){
-	return putval(yo, poss.first, poss.second,tablero);
+/**
+ * Funcion que devuelve nuestras jugadas
+ * @param mivalor el valor del jugador
+ * @param posicion, la posicion del jugador
+ * @param matriz la matriz.
+ * @return una matriz de posiciones
+ */
+Matriz play(TTT mivalor, Posic posicion, Matriz tablero) {
+	return putval(mivalor, posicion.first, posicion.second, tablero);
 };
 
-Posic bestmove(TTT yo, Matriz tablero){
+
+/**
+ * Funcion que calcula la mejor jugada
+ * @param mivalor el valor del jugador
+ * @param matriz la matriz.
+ * @return la mejor posicion.
+ */
+Posic bestmove(TTT mivalor, Matriz tablero) {
 	//implementar
 };
 
-Matriz playbest(TTT yo, Matriz tablero) {
-	return play(yo, bestmove(yo, tablero), tablero);
+
+/**
+ * Funcion que juega al mejor sitio
+ * @param mivalor el valor del jugador
+ * @param matriz la matriz.
+ * @return una matriz con la mejor jugada
+ */
+Matriz playbest(TTT mivalor, Matriz tablero) {
+	return play(mivalor, bestmove(mivalor, tablero), tablero);
 };
 
+
+/**
+ * Funcion que chequea si se gano
+ * @param valor el valor del jugador
+ * @param matriz la matriz.
+ * @return booleano que confirma o no si se gano.
+ */
 //gano::TTT->Matriz TTT->Bool
 //gano a m = any(\x->all(a == ) x) $ allTrios m
-bool gano(TTT valor,Matriz tablero){
-    std::vector<vecTTT>formas = alltrios(tablero);
-    if (std::any_of(formas.begin(), formas.end(), [formas]()
-        { }));
-    if (std::all_of(formas.begin(), formas.end(), [formas](vecTTT i) 
-        {if((i.pop_back()) = X){
-        return true;
-    }; }))
-}//falta implementar
+bool gano(TTT valor, Matriz tablero) {
+    std::vector<vecTTT> formas = alltrios(tablero);
+    std::vector<vecTTT> admitido;
+        struct admisible
+        {
+            TTT d;
+            admisible(TTT n) : d(n) {}
+            bool operator()(TTT n) const { return n == X; }
+        };
+        for (std::vector<vecTTT>::iterator it = formas.begin(); it != formas.end(); ++it) {
+        if (std::any_of(formas.begin(), formas.end(), admisible(valor))) {
+            admitido = formas.push_back(it);
+            if (std::all_of(formas.begin(), formas.end(), admisible(valor))){
+                return true;
+            }
+        }
+    }
+}
+//falta implementar
 
 int main() {
 	std::string m;
