@@ -413,12 +413,30 @@ bool gano(TTT valor, Matriz tablero) {
     }
 }
 
+/**
+ * Funcion que chequea si se empato
+ * @param matriz la matriz.
+ * @return booleano que confirma o no si se empato.
+ */
 bool empate(Matriz tablero) {
 
     if (gano(X, tablero)==false && gano(Y, tablero)==false) {
         return true;
     }
     else {return false;}
+}
+
+
+/**
+ * Funcion que chequea si no quedan lugares vacios en el tablero
+ * @param matriz la matriz.
+ * @return booleano que confirma o no si todos los lugares estan vacios.
+ */
+bool nofreePlace(Matriz tablero) {
+
+    std::vector<Posic>allposs = allpos();
+    auto allpos_bind = std::bind(&allpos, tablero, std::placeholders::_1);
+    else { return false; }
 }
 
 int main() {
