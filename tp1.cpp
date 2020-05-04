@@ -413,6 +413,14 @@ bool gano(TTT valor, Matriz tablero) {
     }
 }
 
+bool empate(Matriz tablero) {
+
+    if (gano(X, tablero)==false && gano(Y, tablero)==false) {
+        return true;
+    }
+    else {return false;}
+}
+
 int main() {
 	std::string m;
 
