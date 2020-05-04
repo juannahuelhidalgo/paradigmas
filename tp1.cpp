@@ -435,9 +435,18 @@ bool empate(Matriz tablero) {
 bool nofreePlace(Matriz tablero) {
 
     std::vector<Posic>allposs = allpos();
-    auto allpos_bind = std::bind(&allpos, tablero, std::placeholders::_1);
-    else { return false; }
-}
+    std::vector<TTT> a;
+    auto allpos_bind = std::bind(&getposval, allposs, tablero, std::placeholders::_1);
+    std::transform(begin(allposs), end(allposs), back_inserter(a), allpos_bind);
+    for (std::vector<TTT>::iterator it = a.begin(); it != a.end(); ++it) {
+        if (std::all_of(a.begin(), a.end(), (a.push_back(*it) = V))) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+};//falta implementar
 
 int main() {
 	std::string m;
