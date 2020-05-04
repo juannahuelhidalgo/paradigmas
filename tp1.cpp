@@ -387,27 +387,31 @@ Matriz playbest(TTT mivalor, Matriz tablero) {
  * @param matriz la matriz.
  * @return booleano que confirma o no si se gano.
  */
-//gano::TTT->Matriz TTT->Bool
-//gano a m = any(\x->all(a == ) x) $ allTrios m
 bool gano(TTT valor, Matriz tablero) {
     std::vector<vecTTT> formas = alltrios(tablero);
     std::vector<vecTTT> admitido;
-        struct admisible
-        {
-            TTT d;
-            admisible(TTT n) : d(n) {}
-            bool operator()(TTT n) const { return n == X; }
-        };
+    struct admisible
+    {
+        TTT d;
+        admisible(TTT n);
+        bool operator()(TTT n) const {
+            if (n == X) { return true; }
+            else {
+                return false;
+            }
+        }
+    };
         for (std::vector<vecTTT>::iterator it = formas.begin(); it != formas.end(); ++it) {
         if (std::any_of(formas.begin(), formas.end(), admisible(valor))) {
-            admitido = formas.push_back(it);
-            if (std::all_of(formas.begin(), formas.end(), admisible(valor))){
+            admitido.insert[it];
+            if (std::all_of(admitido.begin(), admitido.end(), admisible(valor))){
                 return true;
+            }else{
+                return false; 
             }
         }
     }
 }
-//falta implementar
 
 int main() {
 	std::string m;
