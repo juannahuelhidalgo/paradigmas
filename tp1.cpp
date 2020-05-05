@@ -449,6 +449,16 @@ bool nofreePlace(Matriz tablero) {
 };//falta implementar
 
 /**
+ * Funcion que comunica quien gano
+ * @return un mensaje al usuario
+ */
+void resultado(Matriz tablero) {
+    if (gano(X, tablero)) { std::cout << "Gano X" << std::endl;}
+    if (gano(Y, tablero)) { std::cout << "Gano Y" << std::endl;}
+}
+
+
+/**
  * Funcion que nos indica si finalizo el encuentro
  * @return un booleano afirmando que termino
  */
@@ -457,7 +467,6 @@ bool finished(Matriz tablero) {
     if (gano (Y, tablero)) { return true; }
     if (nofreePlace (tablero)) { return true; }
 }
-
 
 /**
  * Funcion que lee aquello que el usuario introduce como lugar para jugar
@@ -508,23 +517,27 @@ Matriz newState(Matriz tablero, TTT valor) {
 
 int main() {
 	std::string m;
+    TTT valor;
 
-    std::cout << "tablero generado:" << std::endl;
+	std::cout << "tablero generado:" << std::endl;
 	std::cout << tablero.show();
 
 	std::cout << "Ta-Te-Ti Funcional" << std::endl;
 	std::cout << " " << std::endl;
 	std::cout << "X maquina Y persona" << std::endl;
 	std::cout << " " << std::endl;
-	std::cout << "empieza (S/N)?" << std::endl;
-
+    std::cout << "empieza (S/N)?" << std::endl;
 	std::cin >> m;
 	if (m == "S") {
 		std::cout << "Juege" << std::endl;
-	} else {
+        newState(tablero, valor = Y);
+	}
+	else {
 		std::cout << "Empiezo" << std::endl;
+        newState(tablero, valor = X);
 	}
 
+    resultado(tablero);
 	system("PAUSE");
 	return 0;
 }
