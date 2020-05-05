@@ -448,6 +448,54 @@ bool nofreePlace(Matriz tablero) {
     }
 };//falta implementar
 
+
+/**
+ * Funcion que lee aquello que el usuario introduce como lugar para jugar
+ * @return vector de posicion de su jugada
+ */
+
+Posic readPos() {
+    std::vector<int> poss{ 1,2,3 };
+    int f, c;
+    std::cout << "fila:" << std::endl;
+    std::cin >> f;
+    std::cout << "columna:" << std::endl;
+    std::cin >> c;
+    for(std::vector<int>::iterator it = poss.begin(); it != poss.end(); ++it) {
+        if ((*it = f) && (*it = c)) {
+            return Posic(f,c);
+        }else{
+            std::cout << "valores invalidos" << std::endl;
+            readPos();
+        }
+    }
+}
+
+/**
+ * Funcion que realiza la jugada pasada por el usuario
+ * @param matriz la matriz.
+ * @return la matriz de juego
+ */
+Matriz newStatePlayer(Matriz tablero) {
+   Posic posicion = readPos();
+   return (play(Y, posicion, tablero));
+}
+
+/**
+ * Funcion indica al programa como se jugara persona primera o segunda.
+ * @param matriz la matriz.
+  * @param valor el valor de la maquina o el jugador.
+ * @return la matriz de juego
+ */
+Matriz newState(Matriz tablero, TTT valor) {
+    if(valor = Y){ newStatePlayer(tablero);}else {playbest(X, tablero);
+    if(valor = Y){ std::cout << "player" << std::endl; }else{ std::cout << "maquina" << std::endl; }}
+    tablero.show();
+    if (finished(tablero) == false) {
+        if(valor = Y){ return newState(tablero, X);}else{ newState(tablero, Y);}
+    }
+}
+
 int main() {
 	std::string m;
 
