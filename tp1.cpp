@@ -488,11 +488,11 @@ Matriz newStatePlayer(Matriz tablero) {
  * @return la matriz de juego
  */
 Matriz newState(Matriz tablero, TTT valor) {
-    if(valor = Y){ newStatePlayer(tablero);}else {playbest(X, tablero);
+    if(valor = Y){ return newStatePlayer(tablero);}else {return playbest(X, tablero);
     if(valor = Y){ std::cout << "player" << std::endl; }else{ std::cout << "maquina" << std::endl; }}
     tablero.show();
     if (finished(tablero) == false) {
-        if(valor = Y){ return newState(tablero, X);}else{ newState(tablero, Y);}
+        if(valor = Y){ return newState(tablero, X);}else{ return newState(tablero, Y);}
     }
 }
 
