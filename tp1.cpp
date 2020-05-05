@@ -454,7 +454,7 @@ bool nofreePlace(Matriz tablero) {
  */
 void resultado(Matriz tablero) {
     if (gano(X, tablero)) { std::cout << "Gano X" << std::endl;}
-    if (gano(Y, tablero)) { std::cout << "Gano Y" << std::endl;}
+    if (gano(Y, tablero)) { std::cout << "Gano Y" << std::endl;}else{ std::cout << "Empate" << std::endl; }
 }
 
 
