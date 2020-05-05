@@ -448,6 +448,16 @@ bool nofreePlace(Matriz tablero) {
     }
 };//falta implementar
 
+/**
+ * Funcion que nos indica si finalizo el encuentro
+ * @return un booleano afirmando que termino
+ */
+bool finished(Matriz tablero) {
+    if(gano (X,tablero)){ return true; }
+    if (gano (Y, tablero)) { return true; }
+    if (nofreePlace (tablero)) { return true; }
+}
+
 
 /**
  * Funcion que lee aquello que el usuario introduce como lugar para jugar
