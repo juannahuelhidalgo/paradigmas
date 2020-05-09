@@ -83,7 +83,6 @@ Fila fila(int rowindex, Matriz matriz) {
  * @return La fila modificada.
  */
 Fila putrow(TTT value, int colindex, Fila fila) {
-    std::cout << "ESTOY USANDO PUTROW" << std::endl;
     switch (colindex) {
     case 1: return Fila{ value, fila.item2, fila.item3 };
     case 2: return Fila{ fila.item1, value, fila.item3 };
@@ -101,7 +100,6 @@ Fila putrow(TTT value, int colindex, Fila fila) {
  * @return La matriz modificada.
  */
 Matriz putval(TTT value, int rowindex, int colindex, Matriz matriz) {
-    std::cout << "ESTOY USANDO PUTVAL" << std::endl;
     switch (rowindex) {
     case 1: return Matriz{ putrow(value, colindex, matriz.fila1), matriz.fila2, matriz.fila3 };
     case 2: return Matriz{ matriz.fila1, putrow(value, colindex, matriz.fila2), matriz.fila3 };
@@ -117,7 +115,6 @@ Matriz putval(TTT value, int rowindex, int colindex, Matriz matriz) {
  * @return El item deseado.
  */
 TTT getvalrow(int colindex, Fila fila) {
-    std::cout << "ESTOY USANDO GETVALROW" << std::endl;
     switch (colindex) {
     case 1: return fila.item1;
     case 2: return fila.item2;
@@ -134,11 +131,10 @@ TTT getvalrow(int colindex, Fila fila) {
  * @return El item deseado.
  */
 TTT getval(int colindex, int rowindex, Matriz matriz) {
-    std::cout << "ESTOY USANDO GETVAL" << std::endl;
     switch (rowindex) {
-    case 1:  getvalrow(colindex, matriz.fila1);
-    case 2:  getvalrow(colindex, matriz.fila2);
-    case 3:  getvalrow(colindex, matriz.fila3);
+    case 1: return getvalrow(colindex, matriz.fila1);
+    case 2: return getvalrow(colindex, matriz.fila2);
+    case 3: return getvalrow(colindex, matriz.fila3);
     default: return TTT::V;
     }
 }
@@ -153,7 +149,6 @@ typedef std::pair<int, int> Posic;
  * @return vector con todos las posibles posiciones del tablero.
  */
 std::vector<Posic> allpos() {
-    std::cout << "ESTOY USANDO ALLPOS" << std::endl;
     std::vector<Posic> allposs;
     for (int i = 1; i <= 3; i++) {
         for (size_t j = 1; j <= 3; j++) {
@@ -176,7 +171,6 @@ Matriz tablero = Matriz{ Fila{V, V, V}, Fila{V, V, V}, Fila{V, V, V} };
  * @return El item deseado.
  */
 TTT getposval(Posic posicion, Matriz matriz) {
-    std::cout << "ESTOY USANDO GETPOSVAL" << std::endl;
     return getval(posicion.first, posicion.second, matriz);
 }
 
@@ -237,13 +231,8 @@ std::vector<T> operator+(std::vector<T> vec1, const std::vector<T>&& vec2)
  * @return Un vector con todos los items de las diagonales que intersectan a la posicion.
  */
 std::vector<TTT> mydiags(Posic posicion, Matriz matriz) {
-    /* en el primer caso hay que unir diagppal y diagsec*/
     if ((posicion.first == 2) && (posicion.second == 2)) {
-        // std::vector<TTT> diagppal = getDiagPpal(matriz);
-        // std::vector<TTT> diagsec =  getDiagSec(matriz);
-        // diagppal.insert(diagppal.end(), diagsec.begin(), diagsec.end());
-        return getDiagPpal(matriz) + getDiagSec(matriz);
-    }
+        return getDiagPpal(matriz) + getDiagSec(matriz); }
     if ((posicion.first == 1) && (posicion.second == 1)) return getDiagPpal(matriz);
     if ((posicion.first == 3) && (posicion.second == 3)) return getDiagPpal(matriz);
     if ((posicion.first == 1) && (posicion.second == 3)) return getDiagSec(matriz);
@@ -304,7 +293,6 @@ int valpos(TTT mivalor, Posic posicion, Matriz matriz) {
  * @return Una coleccion con todas las posiciones de una matriz y sus valores numericos asiciados para un jugador.
  */
 std::vector<std::pair<Posic, int>> allposValues(TTT  mivalor, Matriz matriz) {
-    std::cout << "ESTOY USANDO ALLPOSTVALUES" << std::endl;
     std::vector<std::pair<Posic, int>> allposvalues;
     std::vector<Posic> allposvector = allpos();
     std::transform(begin(allposvector), end(allposvector), back_inserter(allposvalues),
@@ -323,7 +311,6 @@ std::vector<std::vector<TTT>> allTrios(Matriz matriz) {
     trios.push_back(getDiagPpal(matriz));
     trios.push_back(getDiagSec(matriz));
     std::transform(begin(n), end(n), back_inserter(trios),
-        // [matriz] (auto nn) {return getColVals(nn, );}
         std::bind(&getColVals, std::placeholders::_1, matriz));
     std::transform(begin(n), end(n), back_inserter(trios),
         std::bind(&getRowVals, std::placeholders::_1, matriz));
@@ -337,7 +324,6 @@ std::vector<std::vector<TTT>> allTrios(Matriz matriz) {
  * @return Una coleccion con todas las posiciones vacias de una matriz y sus valores numericos asiciados para un jugador.
  */
 std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
-    std::cout << "ESTOY USANDO AVAILMOVES" << std::endl;
     std::vector<std::pair<Posic, int>> posvalues = allposValues(mivalor, matriz);
     std::remove_if(posvalues.begin(), posvalues.end(),
         [matriz](std::pair<Posic, int> posval) {return getposval(posval.first, matriz) != TTT::V; });
@@ -351,7 +337,6 @@ std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
  * @return la mejor posicion en la que un jugador puede jugar.
  */
 Posic bestmove(TTT mivalor, Matriz matriz) {
-    std::cout << "ESTOY USANDO BESTMOVES" << std::endl;
     std::vector<std::pair<Posic, int>> posvalues = availmoves(mivalor, matriz);
     return std::accumulate(posvalues.begin(), posvalues.end(), posvalues[0],
         [](std::pair<Posic, int> posvalbest, std::pair<Posic, int> posvalnew) {
@@ -365,9 +350,8 @@ Posic bestmove(TTT mivalor, Matriz matriz) {
  * @param matriz la matriz.
  * @return La matriz con la nueva jugada realizada.
  */
-Matriz play(TTT mivalor, Posic posicion, Matriz tablero) {
-    std::cout << "ESTOY USANDO PLAY" << std::endl;
-    return putval(mivalor, posicion.first, posicion.second, tablero);
+Matriz play(TTT mivalor, Posic posicion, Matriz matriz) {
+    return putval(mivalor, posicion.first, posicion.second, matriz);
 }
 
 /**
@@ -376,9 +360,8 @@ Matriz play(TTT mivalor, Posic posicion, Matriz tablero) {
  * @param matriz la matriz.
  * @return La matriz con la nueva mejor jugada realizada.
  */
-Matriz playbest(TTT mivalor, Matriz tablero) {
-    std::cout << "ESTOY USANDO PLAYBEST" << std::endl;
-    return play(mivalor, bestmove(mivalor, tablero), tablero);
+Matriz playbest(TTT mivalor, Matriz matriz) {
+    return play(mivalor, bestmove(mivalor, matriz), matriz);
 };
 
 /**
@@ -387,12 +370,13 @@ Matriz playbest(TTT mivalor, Matriz tablero) {
  * @param matriz la matriz.
  * @return Verdadero si el jugador gano, falso en caso contrario.
  */
-bool gano(TTT valor, Matriz tablero) {
-    std::vector<std::vector<TTT>> trios = allTrios(tablero);
-    return std::any_of(trios.begin(), trios.end(),
+bool gano(TTT valor, Matriz matriz) {
+    std::vector<std::vector<TTT>> trios = allTrios(matriz);
+   return std::any_of(trios.begin(), trios.end(),
         [valor](std::vector<TTT> trio) {return std::all_of(trio.begin(), trio.end(),
             [valor](TTT valortrio) {return valor == valortrio; }); });
 }
+
 
 /**
  * Funcion que verifica si hay un empate en una matriz.
@@ -466,10 +450,10 @@ Matriz newStatePlayer(Matriz matriz) {
  * @param valor el valor del jugador. Maquina = X, usuario = Y.
  * @return Matriz con el nuevo estado del juego.
  */
-Matriz newState(Matriz matriz, TTT valor) {   
+Matriz newState(Matriz matriz, TTT valor) {
     if (valor == Y) { matriz = newStatePlayer(matriz); }
-    
-    else { std::cout << "ACA JUEGA LA MAQUINA" << std::endl; matriz = playbest(TTT::X, matriz); }
+
+    else {matriz = playbest(TTT::X, matriz); }
     if (valor == Y) { std::cout << "player" << std::endl; }
     else { std::cout << "maquina" << std::endl; }
     std::cout << matriz.show();
@@ -492,6 +476,6 @@ int main() {
     std::cin >> m;
     tablero = newState(tablero, (m == 'S' || m == 's') ? TTT::Y : TTT::X);
 
-    resultado(tablero);
+    std::cout << resultado(tablero) << std::endl;
     return 0;
 }
