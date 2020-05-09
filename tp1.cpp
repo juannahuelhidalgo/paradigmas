@@ -374,7 +374,8 @@ bool gano(TTT valor, Matriz matriz) {
     std::vector<std::vector<TTT>> trios = allTrios(matriz);
    return std::any_of(trios.begin(), trios.end(),
         [valor](std::vector<TTT> trio) {return std::all_of(trio.begin(), trio.end(),
-            [valor](TTT valortrio) {return valor == valortrio; }); });
+            [valor](TTT valortrio) {
+                return valor == valortrio; }); });
 }
 
 
@@ -403,7 +404,7 @@ bool nofreePlace(Matriz matriz) {
  * @return Verdadero si no hay mas jugadas posibles, falso en caso contrario.
  */
 bool finished(Matriz matriz) {
-    return gano(TTT::X, matriz) || gano(TTT::Y, matriz) || nofreePlace(matriz);
+    return gano(X, matriz) || gano(Y, matriz) || nofreePlace(matriz);
 }
 
 /**
@@ -452,13 +453,14 @@ Matriz newStatePlayer(Matriz matriz) {
  */
 Matriz newState(Matriz matriz, TTT valor) {
     if (valor == Y) { matriz = newStatePlayer(matriz); }
-
     else {matriz = playbest(TTT::X, matriz); }
     if (valor == Y) { std::cout << "player" << std::endl; }
     else { std::cout << "maquina" << std::endl; }
     std::cout << matriz.show();
-    if (!finished(matriz)) newState(matriz, (valor == TTT::Y) ? TTT::X : TTT::Y);
-    return matriz;
+    if (!finished(matriz)){newState(matriz, (valor == TTT::Y) ? TTT::X : TTT::Y);} else
+    {
+        return matriz;
+    } 
 }
 
 int main() {
