@@ -130,7 +130,7 @@ TTT getvalrow(int colindex, Fila fila) {
  * @param matriz la matriz que contiene el item.
  * @return El item deseado.
  */
-TTT getval(int colindex, int rowindex, Matriz matriz) {
+TTT getval(int rowindex, int colindex, Matriz matriz) {
     switch (rowindex) {
     case 1: return getvalrow(colindex, matriz.fila1);
     case 2: return getvalrow(colindex, matriz.fila2);
@@ -295,6 +295,10 @@ int valpos(TTT mivalor, Posic posicion, Matriz matriz) {
 std::vector<std::pair<Posic, int>> allposValues(TTT  mivalor, Matriz matriz) {
     std::vector<std::pair<Posic, int>> allposvalues;
     std::vector<Posic> allposvector = allpos();
+   /* std::cout << '\n' << std::endl;
+    for (std::vector<std::pair<Posic, int>>::iterator it = allposvector.begin(); it != allposvector.end(); ++it)
+        std::cout << " (" << (*it).first.first << ',' << (*it).first.second << ")-" << (*it).second;
+    std::cout << '\n';*/
     std::transform(begin(allposvector), end(allposvector), back_inserter(allposvalues),
         [mivalor, matriz](Posic pos) {return make_pair(pos, valpos(mivalor, pos, matriz)); });
     return allposvalues;
@@ -325,9 +329,18 @@ std::vector<std::vector<TTT>> allTrios(Matriz matriz) {
  */
 std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
     std::vector<std::pair<Posic, int>> posvalues = allposValues(mivalor, matriz);
-    std::remove_if(posvalues.begin(), posvalues.end(),
-        [matriz](std::pair<Posic, int> posval) {return getposval(posval.first, matriz) != TTT::V; });
+    std::cout << "avail-postvalues contains:";
+    for (std::vector<std::pair<Posic, int>>::iterator it = posvalues.begin(); it != posvalues.end(); ++it)
+        std::cout << " (" << (*it).first.first << ',' << (*it).first.second << ")-" << (*it).second;
+    std::cout << '\n';
+   posvalues.erase( (std::remove_if(posvalues.begin(), posvalues.end(),
+        [matriz](std::pair<Posic, int> posval) {return getposval(posval.first, matriz) != TTT::V; })) ,  posvalues.end());
+    std::cout << "avail-postvalues despues contains:";
+    for (std::vector<std::pair<Posic, int>>::iterator it = posvalues.begin(); it != posvalues.end(); ++it)
+        std::cout << " (" << (*it).first.first << ',' << (*it).first.second << ")-" << (*it).second;
+    std::cout << '\n';
     return posvalues;
+   
 }
 
 /**
@@ -338,6 +351,10 @@ std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
  */
 Posic bestmove(TTT mivalor, Matriz matriz) {
     std::vector<std::pair<Posic, int>> posvalues = availmoves(mivalor, matriz);
+    std::cout << "bestmove-postvalues contains:";
+    for (std::vector<std::pair<Posic, int>>::iterator it = posvalues.begin(); it != posvalues.end(); ++it)
+        std::cout << " (" << (*it).first.first << ',' << (*it).first.second << ")-" << (*it).second;
+    std::cout << '\n';
     return std::accumulate(posvalues.begin(), posvalues.end(), posvalues[0],
         [](std::pair<Posic, int> posvalbest, std::pair<Posic, int> posvalnew) {
             return (posvalbest.second >= posvalnew.second) ? posvalbest : posvalnew; }).first;
