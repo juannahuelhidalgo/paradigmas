@@ -329,16 +329,8 @@ std::vector<std::vector<TTT>> allTrios(Matriz matriz) {
  */
 std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
     std::vector<std::pair<Posic, int>> posvalues = allposValues(mivalor, matriz);
-    std::cout << "avail-postvalues contains:";
-    for (std::vector<std::pair<Posic, int>>::iterator it = posvalues.begin(); it != posvalues.end(); ++it)
-        std::cout << " (" << (*it).first.first << ',' << (*it).first.second << ")-" << (*it).second;
-    std::cout << '\n';
    posvalues.erase( (std::remove_if(posvalues.begin(), posvalues.end(),
         [matriz](std::pair<Posic, int> posval) {return getposval(posval.first, matriz) != TTT::V; })) ,  posvalues.end());
-    std::cout << "avail-postvalues despues contains:";
-    for (std::vector<std::pair<Posic, int>>::iterator it = posvalues.begin(); it != posvalues.end(); ++it)
-        std::cout << " (" << (*it).first.first << ',' << (*it).first.second << ")-" << (*it).second;
-    std::cout << '\n';
     return posvalues;
    
 }
@@ -351,10 +343,6 @@ std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
  */
 Posic bestmove(TTT mivalor, Matriz matriz) {
     std::vector<std::pair<Posic, int>> posvalues = availmoves(mivalor, matriz);
-    std::cout << "bestmove-postvalues contains:";
-    for (std::vector<std::pair<Posic, int>>::iterator it = posvalues.begin(); it != posvalues.end(); ++it)
-        std::cout << " (" << (*it).first.first << ',' << (*it).first.second << ")-" << (*it).second;
-    std::cout << '\n';
     return std::accumulate(posvalues.begin(), posvalues.end(), posvalues[0],
         [](std::pair<Posic, int> posvalbest, std::pair<Posic, int> posvalnew) {
             return (posvalbest.second >= posvalnew.second) ? posvalbest : posvalnew; }).first;
@@ -482,7 +470,7 @@ Matriz newState(Matriz matriz, TTT valor) {
 
 int main() {
     char m;
-    TTT valor;
+    
 
     std::cout << "tablero generado:" << std::endl;
     std::cout << tablero.show();
