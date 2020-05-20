@@ -21,9 +21,6 @@ int main() {
      * El tablero base del juego, una matriz con todos los items con el valor V (vacio)
      */
     Matriz tablero = Matriz {Fila{V, V, V}, Fila{V, V, V}, Fila{V, V, V}};
-    
-	std::cout << "tablero generado:" << std::endl;
-	std::cout << tablero.show();
 
 	std::cout << "Ta-Te-Ti Funcional" << std::endl;
 	std::cout << " " << std::endl;

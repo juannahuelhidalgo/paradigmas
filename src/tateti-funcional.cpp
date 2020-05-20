@@ -11,15 +11,10 @@
  * @date Abril de 2020
  * @see link a git
  */
-#include <iostream>
-#include <ostream>
-#include <vector>
-#include <string>
-#include <algorithm>
-#include <numeric>
-#include <set>
-#include <functional>
 #include "tateti-funcional.hpp"
+
+/* TEMPLATE VARIANT */
+#if TEMPLATE_VARIANT == 1
 
 /**
  * Funcion que devuelve una fila de la matriz dada.
@@ -27,7 +22,27 @@
  * @param matriz de donde se extraera la fila.
  * @return La fila deseada.
  */
-Fila fila(int rowindex, Matriz matriz) {
+template<typename T>
+Fila<T> fila(int rowindex, Matriz<T> matriz) {
+	switch(rowindex) {
+	case 1: return matriz.fila1;
+	case 2: return matriz.fila2;
+	case 3: return matriz.fila3;
+	default: return Fila<T>{V, V, V};
+	}
+}
+
+#endif
+
+#if TEMPLATE_VARIANT == 0
+
+/**
+ * Funcion que devuelve una fila de la matriz dada.
+ * @param rowindex indice de la fila.
+ * @param matriz de donde se extraera la fila.
+ * @return La fila deseada.
+ */
+Fila fila(const int &rowindex, const Matriz &matriz) {
 	switch(rowindex) {
 	case 1: return matriz.fila1;
 	case 2: return matriz.fila2;
@@ -36,24 +51,6 @@ Fila fila(int rowindex, Matriz matriz) {
 	}
 }
 
-/* TEMPLATE VARIANT */
-
-// /**
-//  * Funcion que devuelve una fila de la matriz dada.
-//  * @param rowindex indice de la fila.
-//  * @param matriz de donde se extraera la fila.
-//  * @return La fila deseada.
-//  */
-// template<typename T>
-// Fila<T> fila(int rowindex, Matriz<T> matriz) {
-// 	switch(rowindex) {
-// 	case 1: return matriz.fila1;
-// 	case 2: return matriz.fila2;
-// 	case 3: return matriz.fila3;
-// 	default: return Fila<T>{V, V, V};
-// 	}
-// }
-
 /**
  * Funcion que devuelve una fila con un item modificado.
  * @param value valor del nuevo item.
@@ -61,7 +58,7 @@ Fila fila(int rowindex, Matriz matriz) {
  * @param fila la fila que se modificara.
  * @return La fila modificada.
  */
-Fila putrow(TTT value, int colindex, Fila fila) {
+Fila putrow(const TTT &value, const int &colindex, const Fila &fila) {
 	switch (colindex) {
 	case 1: return Fila {value, fila.item2, fila.item3};
 	case 2: return Fila {fila.item1, value, fila.item3};
@@ -78,7 +75,7 @@ Fila putrow(TTT value, int colindex, Fila fila) {
  * @param matriz la matriz que se modificara.
  * @return La matriz modificada.
  */
-Matriz putval(TTT value, int rowindex, int colindex, Matriz matriz) {
+Matriz putval(const TTT &value, const int &rowindex, const int &colindex, const Matriz &matriz) {
 	switch (rowindex) {
 	case 1: return Matriz {putrow(value, colindex, matriz.fila1), matriz.fila2, matriz.fila3};
 	case 2: return Matriz {matriz.fila1, putrow(value, colindex, matriz.fila2), matriz.fila3};
@@ -93,7 +90,7 @@ Matriz putval(TTT value, int rowindex, int colindex, Matriz matriz) {
  * @param fila la fila que contiene el item.
  * @return El item deseado.
  */
-TTT getvalrow(int colindex, Fila fila){
+TTT getvalrow(const int &colindex,const  Fila &fila){
 	switch (colindex) {
 	case 1: return fila.item1;
 	case 2: return fila.item2;
@@ -109,7 +106,7 @@ TTT getvalrow(int colindex, Fila fila){
  * @param matriz la matriz que contiene el item.
  * @return El item deseado.
  */
-TTT getval(int rowindex, int colindex, Matriz matriz) {
+TTT getval(const int &rowindex, const int &colindex, const Matriz &matriz) {
 	switch (rowindex) {
 	case 1: return getvalrow(colindex, matriz.fila1);
 	case 2: return getvalrow(colindex, matriz.fila2);
@@ -138,17 +135,12 @@ std::vector<Posic> allpos() {
 }
 
 /**
- * El tablero base del juego, una matriz con todos los items con el valor V (vacio)
- */
-Matriz tablero = Matriz {Fila{V, V, V}, Fila{V, V, V}, Fila{V, V, V}};
-
-/**
  * Funcion que devuelve un item de una posicion de una matriz.
  * @param posicion la posicion del item.
  * @param matriz la matriz que contiene el item.
  * @return El item deseado.
  */
-TTT getposval(Posic posicion, Matriz matriz) {
+TTT getposval(const Posic &posicion, const Matriz &matriz) {
 	return getval(posicion.first, posicion.second, matriz);
 }
 
@@ -158,7 +150,7 @@ TTT getposval(Posic posicion, Matriz matriz) {
  * @param matriz la matriz que contiene el fila.
  * @return Un vector con los items de una fila.
  */
-std::vector<TTT> getRowVals(int rowindex, Matriz matriz) {
+std::vector<TTT> getRowVals(const int &rowindex, const Matriz &matriz) {
 	return std::vector<TTT> {getval(rowindex, 1, matriz), getval(rowindex, 2, matriz), getval(rowindex, 3, matriz)};
 }
 
@@ -168,7 +160,7 @@ std::vector<TTT> getRowVals(int rowindex, Matriz matriz) {
  * @param matriz la matriz que contiene el columna.
  * @return Un vector con los items de una columna.
  */
-std::vector<TTT> getColVals(int colindex, Matriz matriz) {
+std::vector<TTT> getColVals(const int &colindex, const Matriz &matriz) {
 	return std::vector<TTT> {getval(1, colindex, matriz), getval(2, colindex, matriz), getval(3, colindex, matriz)};
 }
 
@@ -177,7 +169,7 @@ std::vector<TTT> getColVals(int colindex, Matriz matriz) {
  * @param matriz la matriz que contiene la diagonal principal.
  * @return Un vector con los items de la diagonal principal.
  */
-std::vector<TTT> getDiagPpal(Matriz matriz) {
+std::vector<TTT> getDiagPpal(const Matriz &matriz) {
 	return std::vector<TTT> {getval(1, 1, matriz), getval(2, 2, matriz), getval(3, 3, matriz)};
 }
 
@@ -186,7 +178,7 @@ std::vector<TTT> getDiagPpal(Matriz matriz) {
  * @param matriz la matriz que contiene la diagonal secundaria.
  * @return Un vector con los items de la diagonal secundaria.
  */
-std::vector<TTT> getDiagSec(Matriz matriz) {
+std::vector<TTT> getDiagSec(const Matriz &matriz) {
 	return std::vector<TTT> {getval(1, 3, matriz), getval(2, 2, matriz), getval(3, 1, matriz)};
 }
 
@@ -208,7 +200,7 @@ std::vector<T> operator+(std::vector<T> vec1, const std::vector<T>&& vec2)
  * @param matriz la matriz que contiene la diagonal secundaria.
  * @return Un vector con todos los items de las diagonales que intersectan a la posicion.
  */
-std::vector<TTT> mydiags(Posic posicion, Matriz matriz) {
+std::vector<TTT> mydiags(const Posic &posicion, const Matriz &matriz) {
 	if ((posicion.first == 2) && (posicion.second == 2)) {
 		return getDiagPpal(matriz) + getDiagSec(matriz);
 	}
@@ -225,7 +217,7 @@ std::vector<TTT> mydiags(Posic posicion, Matriz matriz) {
  * @param valor el valor de un item.
  * @return Un numero que representa el valor de un item para un jugador.
  */
-int playvalue(TTT mivalor, TTT valor) {
+int playvalue(const TTT &mivalor, const TTT &valor) {
 	if (mivalor == valor) return 2;
 	if (valor == TTT::V) return 1;
 	else return 0;
@@ -242,7 +234,7 @@ int playvalue(TTT mivalor, TTT valor) {
  * @param valores los valores de una coleccion de items.
  * @return Numeros que representan los valores de una coleccion de items para un jugador.
  */
-std::vector<int> valorize(TTT mivalor, std::vector<TTT> valores) {
+std::vector<int> valorize(const TTT &mivalor, const std::vector<TTT> &valores) {
 	std::vector<int> valnums;
 	std::transform(valores.begin(), valores.end(), std::back_inserter(valnums), 
 		std::bind(&playvalue, mivalor, std::placeholders::_1));
@@ -256,7 +248,7 @@ std::vector<int> valorize(TTT mivalor, std::vector<TTT> valores) {
  * @param matriz la matriz.
  * @return Un numero que representa el valor de una posicion en una matriz para un jugador.
  */
-int valpos(TTT mivalor, Posic posicion, Matriz matriz) {
+int valpos(const TTT &mivalor, const Posic &posicion, const Matriz &matriz) {
 	std::vector<int> myvalues = valorize(mivalor, 
 										 getColVals(posicion.second, matriz) + 
 										 getRowVals(posicion.first, matriz) + 
@@ -270,7 +262,7 @@ int valpos(TTT mivalor, Posic posicion, Matriz matriz) {
  * @param matriz la matriz.
  * @return Una coleccion con todas las posiciones de una matriz y sus valores numericos asiciados para un jugador.
  */
-std::vector<std::pair<Posic, int>> allposValues(TTT  mivalor, Matriz matriz) {
+std::vector<std::pair<Posic, int>> allposValues(const TTT  &mivalor, const Matriz &matriz) {
     std::vector<std::pair<Posic, int>> allposvalues;
     std::vector<Posic> allposvector = allpos();
     std::transform(begin(allposvector), end(allposvector), back_inserter(allposvalues), 
@@ -283,7 +275,7 @@ std::vector<std::pair<Posic, int>> allposValues(TTT  mivalor, Matriz matriz) {
  * @param matriz la matriz.
  * @return Una coleccion con todos los trios de posiciones y sus valores.
  */
-std::vector<std::vector<TTT>> allTrios(Matriz matriz) {
+std::vector<std::vector<TTT>> allTrios(const Matriz &matriz) {
     std::vector<int> n = {1, 2, 3};
 	std::vector<std::vector<TTT>> trios;
 	trios.push_back(getDiagPpal(matriz));
@@ -301,7 +293,7 @@ std::vector<std::vector<TTT>> allTrios(Matriz matriz) {
  * @param matriz la matriz.
  * @return Una coleccion con todas las posiciones vacias de una matriz y sus valores numericos asiciados para un jugador.
  */
-std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
+std::vector<std::pair<Posic, int>> availmoves(const TTT &mivalor, const Matriz &matriz) {
     std::vector<std::pair<Posic, int>> posvalues = allposValues(mivalor, matriz);
 	posvalues.erase(std::remove_if(posvalues.begin(), posvalues.end(), 
 		[matriz] (std::pair<Posic, int> posval) {return getposval(posval.first, matriz) != TTT::V;
@@ -315,7 +307,7 @@ std::vector<std::pair<Posic, int>> availmoves(TTT mivalor, Matriz matriz) {
  * @param matriz la matriz.
  * @return la mejor posicion en la que un jugador puede jugar.
  */
-Posic bestmove(TTT mivalor, Matriz matriz) {
+Posic bestmove(const TTT &mivalor, const Matriz &matriz) {
 	std::vector<std::pair<Posic, int>> posvalues = availmoves(mivalor, matriz);
 	return std::accumulate(posvalues.begin(), posvalues.end(), posvalues[0], 
 		[] (std::pair<Posic, int> posvalbest, std::pair<Posic, int> posvalnew) {
@@ -329,7 +321,7 @@ Posic bestmove(TTT mivalor, Matriz matriz) {
  * @param matriz la matriz.
  * @return La matriz con la nueva jugada realizada.
  */
-Matriz play(TTT mivalor, Posic posicion, Matriz matriz) {
+Matriz play(const TTT &mivalor, const Posic &posicion, const Matriz &matriz) {
 	return putval(mivalor, posicion.first, posicion.second, matriz);
 }
 
@@ -339,7 +331,7 @@ Matriz play(TTT mivalor, Posic posicion, Matriz matriz) {
  * @param matriz la matriz.
  * @return La matriz con la nueva mejor jugada realizada.
  */
-Matriz playbest(TTT mivalor, Matriz matriz) {
+Matriz playbest(const TTT &mivalor, const Matriz &matriz) {
 	return play(mivalor, bestmove(mivalor, matriz), matriz);
 }
 
@@ -349,35 +341,19 @@ Matriz playbest(TTT mivalor, Matriz matriz) {
  * @param matriz la matriz.
  * @return Verdadero si el jugador gano, falso en caso contrario.
  */
-bool gano(TTT valor, Matriz matriz) {
+bool gano(const TTT &valor, const Matriz &matriz) {
     std::vector<std::vector<TTT>> trios = allTrios(matriz);
 	return std::any_of(trios.begin(), trios.end(), 
 		[valor] (std::vector<TTT> trio) {return std::all_of(trio.begin(), trio.end(), 
 				[valor] (TTT valortrio) {return valor == valortrio;}); });
 }
-/*DEBUG*/
-// bool gano(TTT valor, Matriz matriz) {
-// 	std::cout << "valor=" << valor << std::endl; 
-//     std::vector<std::vector<TTT>> trios = allTrios(matriz);
-// 	return std::any_of(trios.begin(), trios.end(), 
-// 		[valor] (std::vector<TTT> trio) {
-// 			bool res1 = std::all_of(trio.begin(), trio.end(), 
-// 				[valor] (TTT valortrio) {
-// 					bool res2 = valor == valortrio; 
-// 					std::cout << "res2=" << res2 << std::endl; 
-// 					return res2;
-// 				}); 
-// 			std::cout << "res1=" << res1 << std::endl; 
-// 			return res1;
-// 		});
-// }
 
 /**
  * Funcion que verifica si hay un empate en una matriz.
  * @param matriz la matriz.
  * @return Verdadero si hay un empate, falso en caso contrario.
  */
-bool empate(Matriz matriz) {
+bool empate(const Matriz &matriz) {
 	return !gano(TTT::X, matriz) && !gano(TTT::Y, matriz);
 }
 
@@ -386,7 +362,7 @@ bool empate(Matriz matriz) {
  * @param matriz la matriz.
  * @return Verdadero si no quedan lugares vacios, falso en caso contrario.
  */
-bool nofreePlace(Matriz matriz) {
+bool nofreePlace(const Matriz &matriz) {
     std::vector<Posic> allposvector = allpos();
 	return std::all_of(allposvector.begin(), allposvector.end(), 
 		[matriz] (Posic pos) {return TTT::V != getposval(pos, matriz);});
@@ -396,7 +372,7 @@ bool nofreePlace(Matriz matriz) {
  * Funcion que verifica si no hay mas jugadas posibles en una matriz.
  * @return Verdadero si no hay mas jugadas posibles, falso en caso contrario.
  */
-bool finished(Matriz matriz) {
+bool finished(const Matriz &matriz) {
     return gano(TTT::X ,matriz) || gano (TTT::Y, matriz) || nofreePlace(matriz);
 }
 
@@ -404,7 +380,7 @@ bool finished(Matriz matriz) {
  * Funcion que devuelve quien gano en una matriz
  * @return String con el resultado de la matriz
  */
-std::string resultado(Matriz matriz) {
+std::string resultado(const Matriz &matriz) {
     if (gano(X, matriz)) {return "Gano X";}
     else if (gano(Y, matriz)) {return "Gano Y";}
 	else {return "Empate";}
@@ -434,7 +410,7 @@ Posic readPos() {
  * @param matriz la matriz.
  * @return Matriz con el nuevo estado del juego.
  */
-Matriz newStatePlayer(Matriz matriz) {
+Matriz newStatePlayer(const Matriz &matriz) {
    return (play(Y, readPos(), matriz));
 }
 
@@ -444,7 +420,7 @@ Matriz newStatePlayer(Matriz matriz) {
  * @param valor el valor del jugador. Maquina = X, usuario = Y.
  * @return Matriz con el nuevo estado del juego.
  */
-Matriz newState(Matriz matriz, TTT valor) {
+Matriz newState(Matriz matriz, const TTT &valor) {
     if (valor == Y) {matriz = newStatePlayer(matriz);} else {matriz = playbest(TTT::X, matriz);}
     if (valor == Y) {std::cout << "player" << std::endl;} else {std::cout << "maquina" << std::endl;}
     std::cout << matriz.show();
@@ -453,6 +429,8 @@ Matriz newState(Matriz matriz, TTT valor) {
 	}
 	return matriz;
 }
+
+#endif
 
 // int main() {
 // 	char m;

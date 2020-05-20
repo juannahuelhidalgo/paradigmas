@@ -3,19 +3,20 @@
 #include "tateti-funcional.hpp"
 
 TEST_CASE("fila", "[matriz]") {
-    // Matriz<Fila<int>> mat = {Fila<int> {0,0,0}, Fila<int> {0,0,0}, Fila<int> {0,0,0}};
-
-    // REQUIRE(fila<Fila<int>,Matriz<Fila<int>>>(2, mat) == Fila<int>{0,0,0});
 
     /* TEMPLATE VARIANT */
-    // Matriz<TTT> mat = Matriz<TTT> {Fila<TTT>{V, V, V}, Fila<TTT>{V, V, V}, Fila<TTT>{V, V, V}};
-    // Fila<TTT> aaa = fila<TTT>(0,mat);
-    // Fila<TTT> bbb = Fila<TTT>{V, V, V};
+#if	TEMPLATE_VARIANT == 1
+    Matriz<TTT> mat = Matriz<TTT> {Fila<TTT>{V, V, V}, Fila<TTT>{V, V, V}, Fila<TTT>{V, V, V}};
+    Fila<TTT> aaa = fila<TTT>(0,mat);
+    Fila<TTT> bbb = Fila<TTT>{V, V, V};
+#endif
 
     /* NON-TEMPLATE VARIANT */
-    Matriz mat = Matriz {Fila{V, V, V}, Fila{V, V, V}, Fila{V, V, V}};
+#if	TEMPLATE_VARIANT == 0
+    Matriz mat = Matriz {Fila{X, X, V}, Fila{Y, V, X}, Fila{V, Y, Y}};
     Fila aaa = fila(1,mat);
-    Fila bbb = Fila{V, V, V};
-    
+    Fila bbb = Fila{X, X, V};
+#endif
+
     REQUIRE(aaa==bbb);
 }

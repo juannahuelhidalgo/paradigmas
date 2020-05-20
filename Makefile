@@ -4,7 +4,7 @@
 CXX = g++
 
 EXEC          := tateti-funcional
-FLAGS         := -g #-Werror -Wextra -Wall # -g is for debugging
+FLAGS         := -g -Werror -Wextra -Wall # -g is for debugging
 CXXFLAGS      := $(FLAGS)
 INC           := -I include
 SRC           := $(wildcard src/*.cpp)
